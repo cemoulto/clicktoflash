@@ -1794,4 +1794,69 @@ didReceiveResponse:(NSHTTPURLResponse *)response
     [_launchedAppBundleIdentifier release];
     _launchedAppBundleIdentifier = newValue;
 }
+
+
+#pragma mark -
+#pragma mark WebScripting Protocol
+
+- (id)objectForWebScript
+{
+	return self;
+}
+
++ (NSString *)webScriptNameForSelector:(SEL)aSelector
+{
+	// javascript may call GetVariable("$version") on us
+	if (aSelector == @selector(flashGetVariable:))
+		return @"GetVariable";
+    return nil;
+}
+
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)aSelector
+{
+    if (aSelector == @selector(flashGetVariable:))
+		return NO;
+    return YES;
+}
+
+- (id)flashGetVariable:(id)flashVar
+{
+	static NSString *sFlashVersion = nil;
+	
+	if (flashVar && [flashVar isKindOfClass:[NSString class]])
+	{
+		if ([(NSString *)flashVar isEqualToString:@"$version"])
+		{
+			if (sFlashVersion == nil)
+			{
+				NSString *versionString = @"10,0,45,2"; // Hard-code a backup version, just in case
+				
+				NSBundle *flashBundle = [NSBundle bundleWithPath:@"/Library/Internet Plug-Ins/Flash Player.plugin"];
+				if (flashBundle)
+				{
+					id shortVersion = [flashBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+					if (shortVersion && [shortVersion isKindOfClass:[NSString class]])
+					{
+						NSArray *components = [(NSString *)shortVersion componentsSeparatedByString:@"."];
+						if ([components count] == 4u)
+						{
+							versionString = [components componentsJoinedByString:@","];
+						}
+					}
+				}
+				
+				sFlashVersion = [[NSString alloc] initWithFormat:@"MAC %@", versionString];
+			}
+			
+			return sFlashVersion;
+		}
+		else
+		{
+			return [self flashvarWithName:(NSString *)flashVar];
+		}
+	}
+	
+	return nil;
+}
+
 @end
