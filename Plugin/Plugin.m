@@ -1829,23 +1829,15 @@ didReceiveResponse:(NSHTTPURLResponse *)response
 		{
 			if (sFlashVersion == nil)
 			{
-				NSString *versionString = @"10,0,45,2"; // Hard-code a backup version, just in case
-				
-				NSBundle *flashBundle = [NSBundle bundleWithPath:@"/Library/Internet Plug-Ins/Flash Player.plugin"];
-				if (flashBundle)
+				NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+				if (bundle)
 				{
-					id shortVersion = [flashBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-					if (shortVersion && [shortVersion isKindOfClass:[NSString class]])
+					id version = [bundle objectForInfoDictionaryKey:@"CTFFlashVariableVersion"];
+					if (version && [version isKindOfClass:[NSString class]])
 					{
-						NSArray *components = [(NSString *)shortVersion componentsSeparatedByString:@"."];
-						if ([components count] == 4u)
-						{
-							versionString = [components componentsJoinedByString:@","];
-						}
+						sFlashVersion = [(NSString *)version copy];
 					}
 				}
-				
-				sFlashVersion = [[NSString alloc] initWithFormat:@"MAC %@", versionString];
 			}
 			
 			return sFlashVersion;
