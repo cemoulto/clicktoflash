@@ -1625,7 +1625,7 @@ didReceiveResponse:(NSHTTPURLResponse *)response
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	NSString *URLString = [NSString stringWithFormat:@"http://youtube.com/watch?v=%@",videoId];
+	NSString *URLString = [NSString stringWithFormat:@"http://www.youtube.com/watch?v=%@",videoId];
 	NSURL *YouTubePageURL = [NSURL URLWithString:URLString];
 	NSError *pageSourceError = nil;
 	NSString *pageSourceString = [NSString stringWithContentsOfURL:YouTubePageURL
