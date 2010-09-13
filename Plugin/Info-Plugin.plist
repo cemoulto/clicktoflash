@@ -33,6 +33,15 @@
 	<string>Shockwave Flash 10.1 r82</string>
 	<key>WebPluginMIMETypes</key>
 	<dict>
+		<key>application/futuresplash</key>
+		<dict>
+			<key>WebPluginExtensions</key>
+			<array>
+				<string>spl</string>
+			</array>
+			<key>WebPluginTypeDescription</key>
+			<string>ClickToFlash ${PRODUCT_VERSION}</string>
+		</dict>
 		<key>application/x-shockwave-flash</key>
 		<dict>
 			<key>WebPluginExtensions</key>

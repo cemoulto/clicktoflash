@@ -1665,10 +1665,14 @@ didReceiveResponse:(NSHTTPURLResponse *)response
 - (void) _convertTypesForElement:(DOMElement *)element
 {
     NSString *type = [element getAttribute:@"type"];
-
+/*
     if ([type isEqualToString:sFlashOldMIMEType] || [type length] == 0) {
         [element setAttribute:@"type" value:sFlashNewMIMEType];
     }
+*/
+    if ([type isEqualToString:sFlashOldMIMEType] || [type isEqualToString:sFlashNewMIMEType] || [type length] == 0) {
+        [element setAttribute:@"type" value:@"application/guturesplash"];
+	}
 }
 
 - (void) _convertTypesForContainer
