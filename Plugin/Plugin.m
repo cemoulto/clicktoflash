@@ -410,7 +410,7 @@ BOOL usingMATrackingArea = NO;
 		// problems with opacity
 		
 		NSMutableDictionary *originalOpacityDict = [NSMutableDictionary dictionary];
-		NSString *opacityResetString = @"; opacity: 1.000 !important; -moz-opacity: 1 !important; filter: alpha(opacity=1) !important;";
+		NSString *opacityResetString = @"; opacity: 1.000 !important; -moz-opacity: 1 !important; filter: alpha(opacity=1) !important; z-index: 1000 !important;";
 		
 		NSString *originalWmode = [[self container] getAttribute:@"wmode"];
 		NSString *originalStyle = [[self container] getAttribute:@"style"];
